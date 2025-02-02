@@ -22,6 +22,7 @@ import java.net.URL
 import com.rollbar.android.Rollbar
 
 import com.rollbar.android.example.ui.theme.RollbarAndroidExampleTheme
+import com.rollbar.notifier.sender.SyncSender
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,11 +30,17 @@ class MainActivity : ComponentActivity() {
         //testEndpoint()
         Rollbar.init(this) { builder ->
             builder.endpoint("http://10.0.2.2:8000/api/1/item/")
+            //builder.appPackages(listOf("com.rollbar.android.example"))
+            //builder.sender(SyncSender.Builder().build())
             builder.build()
         }
-        Rollbar.instance().debug("A debug message")
 
         Log.d("ASDF", "Endpoint: ${Rollbar.instance().config().endpoint()}")
+        Log.d("ASDF", "AccessToken: ${Rollbar.instance().config().accessToken()}")
+        Log.d("ASDF", "Enabled: ${Rollbar.instance().config().isEnabled()}")
+        Log.d("ASDF", "AppPackages: ${Rollbar.instance().config().appPackages()}")
+
+        Rollbar.instance().debug("A debug message")
 
         enableEdgeToEdge()
         setContent {
